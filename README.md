@@ -5,5 +5,5 @@ A simple lambda that listens to GitHub webhooks and yells at @0xApotheosis when 
 
 #### TODO
 
-[ ] Reopen PRs
-[ ] Closing heuristics (i.e stack found, author is @gomesalexandre)
+- [ ] Reopen PRs
+- [ ] Closing heuristics (i.e stack found, author is @gomesalexandre)
