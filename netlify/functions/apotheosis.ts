@@ -46,13 +46,19 @@ type PullActivity = {
 };
 
 const yell = async () => {
+  // TODO: Implement me
   console.log("This should yell");
 };
 
 const reopen = async () => {
+  // TODO: Implement me
   console.log("This should reopen the PR");
 };
 
+const isGraphitePr = async () => {
+  // TODO: Implement me
+  return true
+}
 const isMerged = async (pullNumber: number) => {
   // Wait 30 seconds after the synchronize event is triggered to ensure the branch is merged
   await new Promise((resolve) => setTimeout(resolve, 30000));
