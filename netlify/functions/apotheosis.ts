@@ -88,19 +88,27 @@ const handler: Handler = async (event) => {
     statusCode: 204,
   };
 
-  if (!event.body) return noOpResponse;
+  if (!event.body) {
+    console.log("No event.body, this should never happen but obviously no-op")
+    return noOpResponse;
+  }
 
   const pullActivity: PullActivity = JSON.parse(event.body);
 
   // We only want to listen to the synchronize event i.e base branch changed:
   // "A pull request's head branch was updated. For example, the head branch was updated from the base branch or new commits were pushed to the head branch."
   // https://docs.github.com/developers/webhooks-and-events/webhooks/webhook-events-and-payloads?actionType=synchronize#pull_request
-  if (pullActivity.action !== "synchronize") return noOpResponse;
+  if (pullActivity.action !== "synchronize") {
+    console.log("Not a synchronize event, no-op")
+    return noOpResponse;
+  }
 
   // PRs are automatically rebased to a new base branch when the previous branch's PR is merged
   // This triggers a synchronize event from the PR author, which is the only event we care about
-  if (pullActivity.sender.login !== pullActivity.pull_request.user.login)
+  if (pullActivity.sender.login !== pullActivity.pull_request.user.login) {
+    console.log("PR not autorebased by author, no-op")
     return noOpResponse;
+  }
 
   const merged = await isMerged(pullActivity.number);
   const closed = await isClosed(pullActivity.number);
@@ -110,6 +118,8 @@ const handler: Handler = async (event) => {
     await reopen();
     return okResponse;
   }
+
+  console.log("Not an apotheosis action and/or PR not matching merged criteria")
 
   return noOpResponse;
 };
