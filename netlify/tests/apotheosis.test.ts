@@ -1,6 +1,6 @@
 import { Event } from "@netlify/functions/dist/function/event";
 import LambdaTester from "lambda-tester";
-import { handler } from "./apotheosis";
+import { handler } from "../functions/apotheosis";
 
 import Octokit from "@octokit/rest";
 jest.mock("@octokit/rest", () => {
